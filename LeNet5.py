@@ -11,7 +11,7 @@ class LeNet5(nn.Module):
         self.conv2 = nn.Conv2d(6, 16, kernel_size=5)  # [batch, 6, 12, 12] → [batch, 16, 8, 8] → pool → [batch, 16, 4, 4]
         self.fc1 = nn.Linear(16 * 4 * 4, 120)
         self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, 10)  # 10 sınıf için çıkış
+        self.fc3 = nn.Linear(84, 10)  # Çıkış boyutu 10 sınıf için
 
     def forward(self, x):
         x = F.relu(self.conv1(x))     # Conv1 + ReLU

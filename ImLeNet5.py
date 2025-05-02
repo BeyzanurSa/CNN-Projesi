@@ -25,16 +25,16 @@ class ImprovedLeNet5(nn.Module):
         self.fc3 = nn.Linear(84, 10)
 
     def forward(self, x):
-        x = F.relu(self.bn1(self.conv1(x)))   # Conv1 + BN + ReLU
-        x = F.max_pool2d(x, 2)                # MaxPool
+        x = F.relu(self.bn1(self.conv1(x)))
+        x = F.max_pool2d(x, 2)
+        x = F.relu(self.bn2(self.conv2(x)))
+        x = F.max_pool2d(x, 2)
         
-        x = F.relu(self.bn2(self.conv2(x)))   # Conv2 + BN + ReLU
-        x = F.max_pool2d(x, 2)                # MaxPool
-
-        x = x.view(-1, 16 * 5 * 5)            # Flatten
-        x = F.relu(self.fc1(x))              
+        x = x.view(x.size(0), -1)  # En güvenli flatten
+        x = F.relu(self.fc1(x))
         x = self.dropout1(x)
-        x = F.relu(self.fc2(x))              
+        x = F.relu(self.fc2(x))
         x = self.dropout2(x)
-        x = self.fc3(x)                       # No activation here (CrossEntropyLoss includes softmax)
+        x = self.fc3(x)
         return x
+
